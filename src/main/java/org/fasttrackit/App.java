@@ -21,6 +21,8 @@ public class App {
         car.setMaxSpeed(180);
         car.setFuelType("Gasoline");
 
+        System.out.println("Car object: " + car.toString());
+        //System.out.println("Car object: " + car);
 
         System.out.println(car.getName());
         System.out.println(car.getTraveledDistance());
@@ -70,6 +72,11 @@ public class App {
 //        //we should only call static variables from class itself (Car),
 //        //not from a variable containing an object of that class
 
+        HybridCar hybridCar = new HybridCar();
+        hybridCar.setName("cheater");
+        hybridCar.accelerate(60, 1);
+        System.out.println("Traveled Distance " + hybridCar.getTraveledDistance());
+        System.out.println("Fuel Level " + hybridCar.getFuelLevel());
 
     }
 }
