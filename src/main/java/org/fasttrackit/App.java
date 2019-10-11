@@ -12,6 +12,12 @@ public class App {
 
         game.start();
 
+     //   do {
+     //       System.out.println("Repeating sth. ");
+     //   } while (true);
+
+
+
         //this is a one-line comment
 
 //        Engine engine = new Engine();

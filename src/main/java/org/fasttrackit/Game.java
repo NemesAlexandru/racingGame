@@ -21,23 +21,37 @@ public class Game {
 
         initializeCompetitors();
 
-//enhanced for loop or for-each
-        for (Vehicle vehicle : competitors) {
-            double speed = getAccelerationSpeedFromUser();
-            vehicle.accelerate(speed, 1);
-        }
+        boolean winnerNotKnown = true;
+        int competitorsWithoutFuel = 0;
 
+        while (winnerNotKnown && competitorsWithoutFuel < competitors.size()) {
+
+//enhanced for loop or for-each
+            for (Vehicle vehicle : competitors) {
+                double speed = getAccelerationSpeedFromUser();
+                vehicle.accelerate(speed, 1);
+
+                if (selectedTrack.getLength() <= vehicle.getTraveledDistance()) {
+                    winnerNotKnown = false;
+                    System.out.println("The winner is: " + vehicle.getName());
+                    break;
+                }
+                if (vehicle.getFuelLevel() <= 0) {
+                    competitorsWithoutFuel++;
+                }
+            }
+        }
     }
 
     private double getAccelerationSpeedFromUser() {
         System.out.println("Please enter acceleration speed:");
         Scanner scanner = new Scanner(System.in);
-                try{
-                    return scanner.nextDouble();
-                } catch (InputMismatchException e) {
-                    System.out.println("You have entered an invalid number. ");
-                   return getAccelerationSpeedFromUser();
-                }
+        try {
+            return scanner.nextDouble();
+        } catch (InputMismatchException e) {
+            System.out.println("You have entered an invalid number. ");
+            return getAccelerationSpeedFromUser();
+        }
     }
 
     private Track getSelectedTrackFromUser() {
@@ -46,20 +60,19 @@ public class Game {
 
 
         try {
-           int userChoice = scanner.nextInt();
+            int userChoice = scanner.nextInt();
             return tracks[userChoice - 1];
             // | = or
-        } catch (InputMismatchException | ArrayIndexOutOfBoundsException e){
+        } catch (InputMismatchException | ArrayIndexOutOfBoundsException e) {
             System.out.println("You have entered an invalid number. ");
             //recursion - a method calling itself
             return getSelectedTrackFromUser();
         }
 
 
-
     }
 
-    private void  initializeCompetitors() throws Exception {
+    private void initializeCompetitors() throws Exception {
         int competitorCount = getCompetitorCountFromUser();
 
         System.out.println("Today's competitors are: ");
@@ -68,7 +81,7 @@ public class Game {
             Vehicle competitor = new Vehicle();
             competitor.setName("Competitor " + i);
             competitor.setMaxSpeed(300);
-            competitor.setMileage(ThreadLocalRandom.current().nextDouble(6,12));
+            competitor.setMileage(ThreadLocalRandom.current().nextDouble(6, 12));
             competitor.setFuelLevel(80);
 
             System.out.println(competitor);
@@ -82,7 +95,7 @@ public class Game {
         try {
             return scanner.nextInt();
         } catch (InputMismatchException e) {
-            throw new Exception ("You have entered an invalid number. ");
+            throw new Exception("You have entered an invalid number. ");
         } finally {
             System.out.println("Finally block is always executed. ");
         }
@@ -111,6 +124,6 @@ public class Game {
         }
     }
 
-    }
+}
 
 
